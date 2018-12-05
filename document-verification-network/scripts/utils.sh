@@ -279,7 +279,7 @@ parsePeerConnectionParameters() {
   while [ "$#" -gt 0 ]; do
     PEER="peer$1.org$2"
     PEERS="$PEERS $PEER"
-    PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.example.com:7051"
+    PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.dvn.com:7051"
     if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "true" ]; then
       TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_ORG$2_CA")
       PEER_CONN_PARMS="$PEER_CONN_PARMS $TLSINFO"
