@@ -1,0 +1,90 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.toanhd.com:
+  peer0.hust.dvn.com:
+  peer1.hust.dvn.com:
+  peer0.moe.dvn.com:
+  peer1.moe.dvn.com:
+
+networks:
+  dvn:
+services:
+  ca0:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org1
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.hust.dvn.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.hust.dvn.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/hust.dvn.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg1
+    networks:
+      - dvn
+
+  ca1:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org2
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.moe.dvn.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.moe.dvn.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/moe.dvn.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg2
+    networks:
+      - dvn
+
+  orderer.toanhd.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.toanhd.com
+    container_name: orderer.toanhd.com
+    networks:
+      - dvn
+
+  peer0.hust.dvn.com:
+    container_name: peer0.hust.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.hust.dvn.com
+    networks:
+      - dvn
+
+  peer1.hust.dvn.com:
+    container_name: peer1.hust.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.hust.dvn.com
+    networks:
+      - dvn
+
+  peer0.moe.dvn.com:
+    container_name: peer0.moe.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.moe.dvn.com
+    networks:
+      - dvn
+
+  peer1.moe.dvn.com:
+    container_name: peer1.moe.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.moe.dvn.com
+    networks:
+      - dvn

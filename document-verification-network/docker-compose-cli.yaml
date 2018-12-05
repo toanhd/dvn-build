@@ -1,0 +1,93 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.toanhd.com:
+  peer0.hust.dvn.com:
+  peer1.hust.dvn.com:
+  peer0.moe.dvn.com:
+  peer1.moe.dvn.com:
+
+networks:
+  dvn:
+
+services:
+
+  orderer.toanhd.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.toanhd.com
+    container_name: orderer.toanhd.com
+    networks:
+      - dvn
+
+  peer0.hust.dvn.com:
+    container_name: peer0.hust.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.hust.dvn.com
+    networks:
+      - dvn
+
+  peer1.hust.dvn.com:
+    container_name: peer1.hust.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.hust.dvn.com
+    networks:
+      - dvn
+
+  peer0.moe.dvn.com:
+    container_name: peer0.moe.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.moe.dvn.com
+    networks:
+      - dvn
+
+  peer1.moe.dvn.com:
+    container_name: peer1.moe.dvn.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.moe.dvn.com
+    networks:
+      - dvn
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.hust.dvn.com:7051
+      - CORE_PEER_LOCALMSPID=HUSTMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/hust.dvn.com/peers/peer0.hust.dvn.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/hust.dvn.com/peers/peer0.hust.dvn.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/hust.dvn.com/peers/peer0.hust.dvn.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/hust.dvn.com/users/Admin@hust.dvn.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.toanhd.com
+      - peer0.hust.dvn.com
+      - peer1.hust.dvn.com
+      - peer0.moe.dvn.com
+      - peer1.moe.dvn.com
+    networks:
+      - dvn
