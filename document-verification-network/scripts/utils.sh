@@ -193,7 +193,6 @@ chaincodeQuery() {
     else
     echo "no org name like $2"
     fi
-    echo "$DVN_NAME"
     sleep $DELAY
     # echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s) - starttime)) secs" _toanhd
     echo "Attempting to Query peer${PEER}.${DVN_NAME} ...$(($(date +%s) - starttime)) secs"
