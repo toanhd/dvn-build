@@ -186,8 +186,6 @@ chaincodeQuery() {
     DVN_NAME="nothing"
     if [ "$2" = "1" ]
     then
-    echo "$2"
-    echo "$2 hereeeeeeeeeeeeee"
     DVN_NAME="hust"
     elif [ "$2" = "2" ]
     then
@@ -292,14 +290,9 @@ parsePeerConnectionParameters() {
   PEERS=""
   while [ "$#" -gt 0 ]; do
     # PEER="peer$1.org$2" _toanhd
-    # echo "$2 here --------------"
-    # echo $2
-    # echo "$2 here --------------"
     DVN_NAME="nothing"
     if [ "$2" = "1" ]
     then
-    echo "$2"
-    echo "$2 hereeeeeeeeeeeeee"
     DVN_NAME="hust"
     elif [ "$2" = "2" ]
     then
