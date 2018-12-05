@@ -297,15 +297,18 @@ parsePeerConnectionParameters() {
     # echo $2
     # echo "$2 here --------------"
 
+    DVN_NAME = "hust"
+    
     if [ "$2" = "1" ]
     then
-        $DVN_NAME = "hust"
+        "$DVN_NAME" = "hust"
     elif [ "$2" = "2" ]
     then
-        $DVN_NAME = "moe"
+        "$DVN_NAME" = "moe"
     else
         echo "no org name like $2"
     fi
+    echo "$DVN_NAME"
 
     PEER="peer$1.$DVN_NAME"
     PEERS="$PEERS $PEER"
