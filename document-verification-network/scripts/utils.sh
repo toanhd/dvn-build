@@ -183,8 +183,20 @@ chaincodeQuery() {
   while
     test "$(($(date +%s) - starttime))" -lt "$TIMEOUT" -a $rc -ne 0
   do
+
+    if [ "$2" = "1" ]
+    then
+        $DVN_NAME = "hust"
+    elif [ "$2" = "2" ]
+    then
+        $DVN_NAME = "moe"
+    else
+        echo "no org name like $2"
+    fi
+
     sleep $DELAY
-    echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s) - starttime)) secs"
+    # echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s) - starttime)) secs" _toanhd
+    echo "Attempting to Query peer${PEER}.${DVN_NAME} ...$(($(date +%s) - starttime)) secs"
     set -x
     peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
     res=$?
@@ -281,6 +293,7 @@ parsePeerConnectionParameters() {
     # echo "$2 here --------------"
     # echo $2
     # echo "$2 here --------------"
+
     if [ "$2" = "1" ]
     then
         $DVN_NAME = "hust"
@@ -290,6 +303,7 @@ parsePeerConnectionParameters() {
     else
         echo "no org name like $2"
     fi
+
     PEER="peer$1.$DVN_NAME"
     PEERS="$PEERS $PEER"
     PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.dvn.com:7051"
