@@ -42,7 +42,7 @@ function printHelp() {
   echo "      - 'restart' - restart the network"
   echo "      - 'generate' - generate required certificates and genesis block"
   echo "      - 'upgrade'  - upgrade the network from version 1.2.x to 1.3.x"
-  echo "    -c <channel name> - channel name to use (defaults to \"mychannel\")"
+  echo "    -c <channel name> - channel name to use (defaults to \"dvnchannel\")"
   echo "    -t <timeout> - CLI timeout duration in seconds (defaults to 10)"
   echo "    -d <delay> - delay duration in seconds (defaults to 3)"
   echo "    -f <docker-compose-file> - specify which docker-compose file use (defaults to docker-compose-cli.yaml)"
@@ -55,12 +55,12 @@ function printHelp() {
   echo "Typically, one would first generate the required certificates and "
   echo "genesis block, then bring up the network. e.g.:"
   echo
-  echo "	dvn.sh generate -c mychannel"
-  echo "	dvn.sh up -c mychannel -s couchdb"
-  echo "        dvn.sh up -c mychannel -s couchdb -i 1.2.x"
+  echo "	dvn.sh generate -c dvnchannel"
+  echo "	dvn.sh up -c dvnchannel -s couchdb"
+  echo "        dvn.sh up -c dvnchannel -s couchdb -i 1.2.x"
   echo "	dvn.sh up -l node"
-  echo "	dvn.sh down -c mychannel"
-  echo "        dvn.sh upgrade -c mychannel"
+  echo "	dvn.sh down -c dvnchannel"
+  echo "        dvn.sh upgrade -c dvnchannel"
   echo
   echo "Taking all defaults:"
   echo "	dvn.sh generate"
@@ -440,8 +440,8 @@ OS_ARCH=$(echo "$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/mingw64_nt.*/wi
 CLI_TIMEOUT=10
 # default for delay between commands
 CLI_DELAY=3
-# channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+# channel name defaults to "dvnchannel"
+CHANNEL_NAME="dvnchannel"
 # use this as the default docker-compose yaml definition
 COMPOSE_FILE=docker-compose-cli.yaml
 #
