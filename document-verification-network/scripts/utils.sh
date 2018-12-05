@@ -6,7 +6,7 @@
 
 # This is a collection of bash functions used by different scripts
 
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/orderers/orderer.toanhd.com/msp/tlscacerts/tlsca.example.com-cert.pem
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/orderers/orderer.toanhd.com/msp/tlscacerts/tlsca.toanhd.com-cert.pem
 PEER0_ORG1_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/hust.dvn.com/peers/peer0.hust.dvn.com/tls/ca.crt
 PEER0_ORG2_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/moe.dvn.com/peers/peer0.moe.dvn.com/tls/ca.crt
 PEER0_ORG3_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt
@@ -24,8 +24,8 @@ verifyResult() {
 # Set OrdererOrg.Admin globals
 setOrdererGlobals() {
   CORE_PEER_LOCALMSPID="OrdererMSP"
-  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/orderers/orderer.toanhd.com/msp/tlscacerts/tlsca.example.com-cert.pem
-  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/users/Admin@example.com/msp
+  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/orderers/orderer.toanhd.com/msp/tlscacerts/tlsca.toanhd.com-cert.pem
+  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/toanhd.com/users/Admin@toanhd.com/msp
 }
 
 setGlobals() {
