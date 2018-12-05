@@ -184,10 +184,12 @@ chaincodeQuery() {
     test "$(($(date +%s) - starttime))" -lt "$TIMEOUT" -a $rc -ne 0
   do
     
-    DVN_NAME = "hust"
+    DVN_NAME=""
     
     if [ "$2" = "1" ]
     then
+    echo "$2"
+    echo "$2 hereeeeeeeeeeeeee"
         "$DVN_NAME" = "hust"
     elif [ "$2" = "2" ]
     then
@@ -297,7 +299,7 @@ parsePeerConnectionParameters() {
     # echo $2
     # echo "$2 here --------------"
 
-    DVN_NAME = "hust"
+    DVN_NAME=" "
     
     if [ "$2" = "1" ]
     then
