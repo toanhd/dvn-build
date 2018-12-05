@@ -76,10 +76,10 @@ Organizations:
     - &Org2
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: MoeMSP
+        Name: MoEMSP
 
         # ID to load the MSP definition as
-        ID: MoeMSP
+        ID: MoEMSP
 
         MSPDir: crypto-config/peerOrganizations/moe.dvn.com/msp
 
@@ -89,13 +89,13 @@ Organizations:
         Policies:
             Readers:
                 Type: Signature
-                Rule: "OR('MoeMSP.admin', 'MoeMSP.peer', 'MoeMSP.client')"
+                Rule: "OR('MoEMSP.admin', 'MoEMSP.peer', 'MoEMSP.client')"
             Writers:
                 Type: Signature
-                Rule: "OR('MoeMSP.admin', 'MoeMSP.client')"
+                Rule: "OR('MoEMSP.admin', 'MoEMSP.client')"
             Admins:
                 Type: Signature
-                Rule: "OR('MoeMSP.admin')"
+                Rule: "OR('MoEMSP.admin')"
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
