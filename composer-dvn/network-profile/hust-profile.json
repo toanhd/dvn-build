@@ -1,0 +1,134 @@
+{
+    "name": "document-verification-network",
+    "x-type": "hlfv1",
+    "version": "1.0.0",
+    "client": {
+        "organization": "HUST",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300",
+                    "eventHub": "300",
+                    "eventReg": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "dvnchannel": {
+            "orderers": [
+                "orderer.toanhd.com"
+            ],
+            "peers": {
+                "peer0.hust.dvn.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "peer1.hust.dvn.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "peer0.moe.dvn.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "peer1.moe.dvn.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "organizations": {
+        "HUST": {
+            "mspid": "HUSTMSP",
+            "peers": [
+                "peer0.hust.dvn.com",
+                "peer1.hust.dvn.com"
+            ],
+            "certificateAuthorities": [
+                "ca.hust.dvn.com"
+            ]
+        },
+        "MoE": {
+            "mspid": "MoEMSP",
+            "peers": [
+                "peer0.moe.dvn.com",
+                "peer1.moe.dvn.com"
+            ],
+            "certificateAuthorities": [
+                "ca.moe.dvn.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer.toanhd.com": {
+            "url": "grpcs://localhost:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.toanhd.com"
+            },
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICMjCCAdigAwIBAgIRAPCVYdypTYa4XFHvaw2KK9MwCgYIKoZIzj0EAwIwajEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xEzARBgNVBAoTCnRvYW5oZC5jb20xGTAXBgNVBAMTEHRsc2NhLnRv\nYW5oZC5jb20wHhcNMTgxMjA2MDkxMjAwWhcNMjgxMjAzMDkxMjAwWjBqMQswCQYD\nVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5j\naXNjbzETMBEGA1UEChMKdG9hbmhkLmNvbTEZMBcGA1UEAxMQdGxzY2EudG9hbmhk\nLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJnp/rdi2G2023D7tfaoLm0B\nLsPWQLzBBDUYCP2kly4loI+42STj2FK5TT3POq7Ig5z5ScN1u7kPJqH/zbfBCZqj\nXzBdMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1UdEwEB/wQF\nMAMBAf8wKQYDVR0OBCIEIGluVT2QTeL1cZVKdX/qi6RqlAWu19qIiD3LX9m/Xegk\nMAoGCCqGSM49BAMCA0gAMEUCIQCam+g0VP2HBFB0vniS4tKenwlIUcVpefa5hYPw\nAVpvAgIge9aruydBhU7kM7wSPcbWPC6YlJxS9L6ur7fq3aoYxfs=\n-----END CERTIFICATE-----\n"
+            }
+        }
+    },
+    "peers": {
+        "peer0.hust.dvn.com": {
+            "url": "grpcs://localhost:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.hust.dvn.com"
+            },
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICOTCCAd+gAwIBAgIQAYid+rKsNZqGLCo2Q3cnITAKBggqhkjOPQQDAjBuMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEVMBMGA1UEChMMaHVzdC5kdm4uY29tMRswGQYDVQQDExJ0bHNjYS5o\ndXN0LmR2bi5jb20wHhcNMTgxMjA2MDkxMjAwWhcNMjgxMjAzMDkxMjAwWjBuMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEVMBMGA1UEChMMaHVzdC5kdm4uY29tMRswGQYDVQQDExJ0bHNjYS5o\ndXN0LmR2bi5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARXhHkRkp0ZcvY2\n2JGIguANO812f96FCCDoUKSVWheG36hvjXgsFeYbqQb1VG9YPvwEJRZ0TabNvt4I\nUNG5F4Tmo18wXTAOBgNVHQ8BAf8EBAMCAaYwDwYDVR0lBAgwBgYEVR0lADAPBgNV\nHRMBAf8EBTADAQH/MCkGA1UdDgQiBCB4cic2ynrUon/hqzO53buuvLvTEm5ZWvnt\nsqeiZ64ICzAKBggqhkjOPQQDAgNIADBFAiEAo2+Gn/+bzc1ZRqkXzrsuQg8mWix/\nMfkUL/ADkngMOU0CIGo7JSQlOlK3wN3N2MwDnqEffKPMqcHYflrP2/IE8BLb\n-----END CERTIFICATE-----\n"
+            }
+        },
+        "peer1.hust.dvn.com": {
+            "url": "grpcs://localhost:8051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.hust.dvn.com"
+            },
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICOTCCAd+gAwIBAgIQAYid+rKsNZqGLCo2Q3cnITAKBggqhkjOPQQDAjBuMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEVMBMGA1UEChMMaHVzdC5kdm4uY29tMRswGQYDVQQDExJ0bHNjYS5o\ndXN0LmR2bi5jb20wHhcNMTgxMjA2MDkxMjAwWhcNMjgxMjAzMDkxMjAwWjBuMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEVMBMGA1UEChMMaHVzdC5kdm4uY29tMRswGQYDVQQDExJ0bHNjYS5o\ndXN0LmR2bi5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARXhHkRkp0ZcvY2\n2JGIguANO812f96FCCDoUKSVWheG36hvjXgsFeYbqQb1VG9YPvwEJRZ0TabNvt4I\nUNG5F4Tmo18wXTAOBgNVHQ8BAf8EBAMCAaYwDwYDVR0lBAgwBgYEVR0lADAPBgNV\nHRMBAf8EBTADAQH/MCkGA1UdDgQiBCB4cic2ynrUon/hqzO53buuvLvTEm5ZWvnt\nsqeiZ64ICzAKBggqhkjOPQQDAgNIADBFAiEAo2+Gn/+bzc1ZRqkXzrsuQg8mWix/\nMfkUL/ADkngMOU0CIGo7JSQlOlK3wN3N2MwDnqEffKPMqcHYflrP2/IE8BLb\n-----END CERTIFICATE-----\n"
+            }
+        },
+        "peer0.moe.dvn.com": {
+            "url": "grpcs://localhost:9051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.moe.dvn.com"
+            },
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICNTCCAdugAwIBAgIQaPCYZmMqR4kHwRQ7GTg8ZjAKBggqhkjOPQQDAjBsMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEUMBIGA1UEChMLbW9lLmR2bi5jb20xGjAYBgNVBAMTEXRsc2NhLm1v\nZS5kdm4uY29tMB4XDTE4MTIwNjA5MTIwMFoXDTI4MTIwMzA5MTIwMFowbDELMAkG\nA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFu\nY2lzY28xFDASBgNVBAoTC21vZS5kdm4uY29tMRowGAYDVQQDExF0bHNjYS5tb2Uu\nZHZuLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABCD7pQ5gJgheygIm26KC\nrYfva0jHMJol3RHN5GbHOe0gmTIY6qJsCl4I1cXPcxkKuBfZfwnLeEb3xa/hGZUP\no9OjXzBdMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1UdEwEB\n/wQFMAMBAf8wKQYDVR0OBCIEIKmA5RDCRORcnWqsJ9nP9MO1XCxUA+htIhkazjU4\nrBVEMAoGCCqGSM49BAMCA0gAMEUCIQCsSvRwGjrC2GoylOFSi3FQF8U8qTSzmmZP\nK58xBgVw7wIgU+6xnABM4l8KmGh2LqOsRYp9JWtvtWksBYFuGP1z18E=\n-----END CERTIFICATE-----\n"
+            }
+        },
+        "peer1.moe.dvn.com": {
+            "url": "grpcs://localhost:10051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.moe.dvn.com"
+            },
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICNTCCAdugAwIBAgIQaPCYZmMqR4kHwRQ7GTg8ZjAKBggqhkjOPQQDAjBsMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEUMBIGA1UEChMLbW9lLmR2bi5jb20xGjAYBgNVBAMTEXRsc2NhLm1v\nZS5kdm4uY29tMB4XDTE4MTIwNjA5MTIwMFoXDTI4MTIwMzA5MTIwMFowbDELMAkG\nA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFu\nY2lzY28xFDASBgNVBAoTC21vZS5kdm4uY29tMRowGAYDVQQDExF0bHNjYS5tb2Uu\nZHZuLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABCD7pQ5gJgheygIm26KC\nrYfva0jHMJol3RHN5GbHOe0gmTIY6qJsCl4I1cXPcxkKuBfZfwnLeEb3xa/hGZUP\no9OjXzBdMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1UdEwEB\n/wQFMAMBAf8wKQYDVR0OBCIEIKmA5RDCRORcnWqsJ9nP9MO1XCxUA+htIhkazjU4\nrBVEMAoGCCqGSM49BAMCA0gAMEUCIQCsSvRwGjrC2GoylOFSi3FQF8U8qTSzmmZP\nK58xBgVw7wIgU+6xnABM4l8KmGh2LqOsRYp9JWtvtWksBYFuGP1z18E=\n-----END CERTIFICATE-----\n"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.hust.dvn.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca-HUST",
+            "httpOptions": {
+                "verify": false
+            }
+        },
+        "ca.moe.dvn.com": {
+            "url": "https://localhost:8054",
+            "caName": "ca-MoE",
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}
