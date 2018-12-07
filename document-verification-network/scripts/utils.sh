@@ -313,10 +313,9 @@ parsePeerConnectionParameters() {
     PEERS="$PEERS $PEER"
     PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.dvn.com:7051"
     if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "true" ]; then
-      # TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_ORG$2_CA") _toanhd
-      TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_$DVNNAME_CA")
+      TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_ORG$2_CA") #_toanhd
+      #TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_$DVNNAME_CA")
       echo "TLSINFO hereeeeeeeeeee $TLSINFO"
-      echo $TLSINFO
       PEER_CONN_PARMS="$PEER_CONN_PARMS $TLSINFO"
     fi
     # shift by two to get the next pair of peer/org parameters
