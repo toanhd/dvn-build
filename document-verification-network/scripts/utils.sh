@@ -137,13 +137,13 @@ instantiateChaincode() {
   # while 'peer chaincode' command can get the orderer endpoint from the peer
   # (if join was successful), let's supply it directly as we know it using
   # the "-o" option
-  DVN_NAME="nothing"
+  DVNNAME="nothing"
     if [ "$2" = "1" ]
     then
-    DVN_NAME="hust"
+    DVNNAME="hust"
     elif [ "$2" = "2" ]
     then
-    DVN_NAME="moe"
+    DVNNAME="moe"
     else
     echo "no org name like $2"
     fi
@@ -193,19 +193,19 @@ chaincodeQuery() {
   while
     test "$(($(date +%s) - starttime))" -lt "$TIMEOUT" -a $rc -ne 0
   do
-    DVN_NAME="nothing"
+    DVNNAME="nothing"
     if [ "$2" = "1" ]
     then
-    DVN_NAME="hust"
+    DVNNAME="hust"
     elif [ "$2" = "2" ]
     then
-    DVN_NAME="moe"
+    DVNNAME="moe"
     else
     echo "no org name like $2"
     fi
     sleep $DELAY
     # echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s) - starttime)) secs" _toanhd
-    echo "Attempting to Query peer${PEER}.${DVN_NAME} ...$(($(date +%s) - starttime)) secs"
+    echo "Attempting to Query peer${PEER}.${DVNNAME} ...$(($(date +%s) - starttime)) secs"
     set -x
     peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
     res=$?
@@ -299,22 +299,22 @@ parsePeerConnectionParameters() {
   PEERS=""
   while [ "$#" -gt 0 ]; do
     # PEER="peer$1.org$2" _toanhd
-    DVN_NAME="nothing"
+    DVNNAME="nothing"
     if [ "$2" = "1" ]
     then
-    DVN_NAME="hust"
+    DVNNAME="hust"
     elif [ "$2" = "2" ]
     then
-    DVN_NAME="moe"
+    DVNNAME="moe"
     else
     echo "no org name like $2"
     fi
-    PEER="peer$1.$DVN_NAME"
+    PEER="peer$1.$DVNNAME"
     PEERS="$PEERS $PEER"
     PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.dvn.com:7051"
     if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "true" ]; then
       # TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_ORG$2_CA") _toanhd
-      TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_${DVN_NAME}_CA")
+      TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_$DVNNAME_CA")
       PEER_CONN_PARMS="$PEER_CONN_PARMS $TLSINFO"
     fi
     # shift by two to get the next pair of peer/org parameters
