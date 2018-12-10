@@ -21,8 +21,10 @@ function replacePemCert() {
 	sed -i "s#ORG_NAME#MoE#g" network-profile/moe-profile.json
 
 }
+set -x
 rm -rf network-profile 
 mkdir network-profile
+set +x
 
 # Clean the house First
 set -x
