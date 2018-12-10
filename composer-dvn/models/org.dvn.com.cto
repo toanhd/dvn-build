@@ -18,25 +18,56 @@
 
 namespace org.dvn.com
 
-participant SampleParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+concept BasicInfo { //concept
+  o String name
+  o String school
+  o DateTime dob
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+participant Student identified by stdID {
+  o String stdID
+  o Integer intakeYear
+  o BasicInfo info
+}
+participant Lecturer identified by lecID {
+  o String lecID
+  o BasicInfo info
+  o Boolean isMoE
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+asset Grade identified by transcriptID {
+  o String transcriptID
+  o DateTime issueDate
+  o String courseID
+  o String courseName
+  o Integer credit
+  o Integer semester
+  o Double gradeVal
+  //--> Student student  //tham chieu den doi tuong Student
+  --> Lecturer lecturer //tham chieu den doi tuong Lecture
 }
 
-event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+  asset Transcript identified by transcriptID {
+  o String transcriptID
+  o Grade[] gradesList optional// array of grades
+  --> Student student  //tham chieu den doi tuong Student
+  --> Lecturer lecturer //tham chieu den doi tuong Lecturer
+}
+
+transaction Grading {
+  o DateTime date
+  o String transcriptID
+  o String courseID
+  o String courseName
+  o Integer credit
+  o Double gradeVal
+  o Integer semester
+  //o Student student
+  //o Lecturer lecturer
+  o String stdMemberID
+  o String lecMemberID
+}
+event GradingEvent {
+  o Grading gradingTransaction
+  o String action
 }
