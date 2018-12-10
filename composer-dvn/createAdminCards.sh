@@ -1,5 +1,5 @@
 function replacePemCert() {
-	cp network-profile/network-profile-template.json network-profile/org-profile.json
+	cp network-profile-template.json network-profile/org-profile.json
 
 	HUST_TLS_CA_CERT=$(awk 'NF {sub(/\r/, ""); printf "%s\\\\n",$0;}' \
 		../document-verification-network/crypto-config/peerOrganizations/hust.dvn.com/peers/peer0.hust.dvn.com/tls/ca.crt)
@@ -21,6 +21,8 @@ function replacePemCert() {
 	sed -i "s#ORG_NAME#HOSMSP#g" network-profile/moe-profile.json
 
 }
+rm -rf network-profile 
+mkdir network-profile
 
 # Clean the house First
 #set -x
