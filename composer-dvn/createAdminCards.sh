@@ -66,10 +66,11 @@ composer card create -p network-profile/moe-profile.json -u PeerAdminMoE \
 set +x
 sleep 3
 
-# set -x
-# composer card import -c PeerAdmin@dvn-hust -f network-profile/PeerAdmin@dvn-hust.card
-# set +x
+# import created card
+set -x
+composer card import -c PeerAdmin@dvn-hust -f network-profile/PeerAdmin@dvn-hust.card
+set +x
 
-# set -x
-# composer card import -c PeerAdmin@dvn-moe -f network-profile/PeerAdmin@dvn-moe.card
-# set +x
+set -x
+composer card import -c PeerAdmin@dvn-moe -f network-profile/PeerAdmin@dvn-moe.card
+set +x
