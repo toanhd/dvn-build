@@ -30,13 +30,13 @@ function createBNCard() {
 
         # Import cardstarting time for cert might have been met until few minutes on client elapsed)
         set -x
-        composer card import -f network-profile/PeerAdmin@dvn-$1.card
+        composer card import -f admin-$1@composer-dvn.card
 
         set +x
 
         # Test ping
         set -x
-        composer network ping -c PeerAdmin@dvn-$1
+        composer network ping -c admin-$1@composer-dvn
         set +x
 }
 
@@ -82,13 +82,13 @@ echo
 sleep 10
 
 set -x
-composer card import -f network-profile/PeerAdmin@dvn-hust.card
+composer card import -f admin-hust@composer-dvn.card
 set +x
 echo "timeout for 5 sec"
 sleep 5
 
 set -x
-composer network ping -c PeerAdmin@dvn-hust
+composer network ping -c admin-hust@composer-dvn
 set +x
 echo "timeout for 5 sec"
 sleep 5

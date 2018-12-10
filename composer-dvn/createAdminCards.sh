@@ -35,6 +35,13 @@ set -x
 composer card delete -c PeerAdmin@dvn-moe
 set +x
 
+set -x
+composer card delete -c admin-hust@composer-dvn
+set +x
+
+set -x
+composer card delete -c admin-moe@composer-dvn
+set +x
 
 HUSTMSPDIR=../document-verification-network/crypto-config/peerOrganizations/hust.dvn.com/users/Admin@hust.dvn.com/msp
 MoEMSPDIR=../document-verification-network/crypto-config/peerOrganizations/moe.dvn.com/users/Admin@moe.dvn.com/msp
