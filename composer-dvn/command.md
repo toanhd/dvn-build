@@ -15,6 +15,7 @@ awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ../document-verification-network/cr
 ------------------
 // locate certificate and private key for administrator for HUST
 export HUST=../document-verification-network/crypto-config/peerOrganizations/hust.dvn.com/users/Admin@hust.dvn.com/msp
+rm -rf network-profile/admin-hust 
 mkdir network-profile/admin-hust
 cp -p $HUST/signcerts/A*.pem network-profile/admin-hust
 cp -p $HUST/keystore/*_sk network-profile/admin-hust
@@ -22,6 +23,7 @@ cp -p $HUST/keystore/*_sk network-profile/admin-hust
 ------------------
 // locate certificate and private key for administrator for MoE
 export MoE=../document-verification-network/crypto-config/peerOrganizations/moe.dvn.com/users/Admin@moe.dvn.com/msp
+ -rf network-profile/admin-moe
 mkdir network-profile/admin-moe
 cp -p $MoE/signcerts/A*.pem network-profile/admin-moe
 cp -p $MoE/keystore/*_sk network-profile/admin-moe
@@ -36,12 +38,12 @@ INSERT_ORG2_CA_CERT
 ------------------
 //Create business network card for HUST
 
-composer card create -p network-profile/hust-profile.json -u PeerAdmin -c network-profile/admin-hust/Admin@hust.dvn.com-cert.pem -k network-profile/admin-hust/*_sk -r PeerAdmin -r ChannelAdmin -f PeerAdmin@dvn-hust.card
+composer card create -p network-profile/hust-profile.json -u PeerAdminHUST -c network-profile/admin-hust/Admin@hust.dvn.com-cert.pem -k network-profile/admin-hust/*_sk -r PeerAdmin -r ChannelAdmin -f PeerAdmin@dvn-hust.card
 
 ------------------
 //Create business network card for MoE
 
-composer card create -p network-profile/moe-profile.json -u PeerAdmin -c network-profile/admin-moe/Admin@moe.dvn.com-cert.pem -k network-profile/admin-moe/*_sk -r PeerAdmin -r ChannelAdmin -f PeerAdmin@dvn-moe.card
+composer card create -p network-profile/moe-profile.json -u PeerAdminMoE -c network-profile/admin-moe/Admin@moe.dvn.com-cert.pem -k network-profile/admin-moe/*_sk -r PeerAdmin -r ChannelAdmin -f PeerAdmin@dvn-moe.card
 
 ------------------
 //Import card for HUST & MoE

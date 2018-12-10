@@ -3,7 +3,7 @@
     "x-type": "hlfv1",
     "version": "1.0.0",
     "client": {
-        "organization": "NAME",
+        "organization": "ORG_NAME",
         "connection": {
             "timeout": {
                 "peer": {
@@ -118,14 +118,14 @@
     "certificateAuthorities": {
         "ca.hust.dvn.com": {
             "url": "https://localhost:7054",
-            "caName": "ca-HUST",
+            "caName": "ca_HUST",
             "httpOptions": {
                 "verify": false
             }
         },
         "ca.moe.dvn.com": {
             "url": "https://localhost:8054",
-            "caName": "ca-MoE",
+            "caName": "ca_MoE",
             "httpOptions": {
                 "verify": false
             }
