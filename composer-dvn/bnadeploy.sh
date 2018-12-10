@@ -8,13 +8,13 @@ function createBNCard() {
 
         # Add participant
         set -x
-        composer participant add -c PeerAdmin@dvn-hust \
+        composer participant add -c admin-hust@composer-dvn \
                 -d '{"$class":"org.hyperledger.composer.system.NetworkAdmin","participantId":"admin'$1'"}'
         set +x
 
         # Bind identity
         set -x
-        composer identity bind -c PeerAdmin@dvn-hust \
+        composer identity bind -c admin-hust@composer-dvn \
                         -a org.hyperledger.composer.system.NetworkAdmin#admin$1 \
                         -e admin-$1/admin$1-pub.pem
         set +x
