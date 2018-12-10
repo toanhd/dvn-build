@@ -118,14 +118,14 @@
     "certificateAuthorities": {
         "ca.hust.dvn.com": {
             "url": "https://localhost:7054",
-            "caName": "ca_HUST",
+            "caName": "ca-hust",
             "httpOptions": {
                 "verify": false
             }
         },
         "ca.moe.dvn.com": {
             "url": "https://localhost:8054",
-            "caName": "ca_MoE",
+            "caName": "ca-moe",
             "httpOptions": {
                 "verify": false
             }
