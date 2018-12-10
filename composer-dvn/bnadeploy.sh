@@ -60,7 +60,6 @@ set -x
 composer identity request -c PeerAdmin@dvn-hust  -u adminhust -s adminhustpw -d admin-hust
 set +x
 
-
 echo
 echo
 echo "Waiting for things to start up. 10 secs..."
@@ -73,12 +72,8 @@ composer network start  -c PeerAdmin@dvn-hust \
                         -V $APPVERSION \
                         -o endorsementPolicyFile=endorspol.json \
                         -A admin-hust \
-                        -C ./admin-hust/adminhust-pub.pem \
-                        -K ./admin-hust/adminhust-priv.pem
-                        #-A admin-hos1 \
-                        #-C ./admin-hos1/adminhos1-pub.pem \
-                        #-K ./admin-hos1/adminhos1-priv.pem
-
+                        -C admin-hust/adminhust-pub.pem \
+                        -K admin-hust/adminhust-priv.pem
 set +x
 
 echo
@@ -90,22 +85,14 @@ sleep 10
 set -x
 composer card import -f PeerAdmin@dvn-hust.card
 set +x
-
+echo "timeout for 5 sec"
 sleep 5
 
 set -x
 composer network ping -c PeerAdmin@dvn-hust
 set +x
-
+echo "timeout for 5 sec"
 sleep 5
 
-
-# createBNCard hust
-# sshpass -f remotepw.txt scp admin-hos@vnclinet.card core-tech@coretech:~/TuanPV/viettel-clinet/
-
+# create BNCard for another org
 createBNCard moe
-# sshpass -f remotepw.txt scp admin-hd1@vnclinet.card core-tech@coretech:~/TuanPV/viettel-clinet/
-
-# createBNCard vsp
-# sshpass -f remotepw.txt scp admin-vsp@vnclinet.card core-tech@coretech:~/TuanPV/viettel-clinet/
-# sshpass -f remotepw2.txt scp admin-vsp@vnclinet.card tuanpvi@tuanpvpc:~/e/1.Projects/Blockchain/Hyperledger_Fabric/viettel-clinet/
