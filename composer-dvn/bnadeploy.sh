@@ -21,17 +21,16 @@ function createBNCard() {
 
         # Create card
         set -x
-        composer card create   -p ./network-profile/$1-profile.json  \
+        composer card create -p network-profile/$1-profile.json  \
                         -u admin-$1 \
                         -n composer-dvn \
-                        -c ./admin-$1/admin$1-pub.pem \
-                        -k ./admin-$1/admin$1-priv.pem
+                        -c admin-$1/admin$1-pub.pem \
+                        -k admin-$1/admin$1-priv.pem
         set +x
 
         # Import cardstarting time for cert might have been met until few minutes on client elapsed)
         set -x
-        # composer card import -f admin-@vnclinet.card
-        composer card import -f PeerAdmin@dvn-$1.card
+        composer card import -f network-profile/PeerAdmin@dvn-$1.card
 
         set +x
 
@@ -83,7 +82,7 @@ echo
 sleep 10
 
 set -x
-composer card import -f PeerAdmin@dvn-hust.card
+composer card import -f network-profile/PeerAdmin@dvn-hust.card
 set +x
 echo "timeout for 5 sec"
 sleep 5
