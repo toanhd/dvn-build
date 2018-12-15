@@ -56,14 +56,11 @@ asset Grade identified by transcriptID {
 
 transaction Grading {
   o DateTime date
-  o String transcriptID
   o String courseID
   o String courseName
   o Integer credit
   o Double gradeVal
   o Integer semester
-  //o Student student
-  //o Lecturer lecturer
   o String stdID
   o String lecID
 }

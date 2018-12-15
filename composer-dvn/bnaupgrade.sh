@@ -1,4 +1,4 @@
-APPVERSION=0.0.2
+APPVERSION=0.0.3
 
 composer archive create -t dir -n . #create bna file
 
