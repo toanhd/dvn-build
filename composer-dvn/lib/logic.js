@@ -26,7 +26,7 @@ async function Grading(GradingTx) {
     //Action type
     let action = '';
     //create format for transcript id
-    let transcriptID = "transcript_" + GradingTx.stdMemberID;
+    let transcriptID = "transcript_" + GradingTx.stdID;
     //Asset Registry for object type Transcript
     let transcriptReg = await getAssetRegistry('org.dvn.com.Transcript');
     //check existence of transcript
@@ -35,12 +35,12 @@ async function Grading(GradingTx) {
     //Asset Registry for object type Student
     let studentReg = await getParticipantRegistry('org.dvn.com.Student');
     //check existence of student
-    let availStd = await studentReg.exists(GradingTx.stdMemberID);
+    let availStd = await studentReg.exists(GradingTx.stdID);
 
     //Asset Registry for object type Lecturer
     let lecReg = await getParticipantRegistry('org.dvn.com.Lecturer');
     //check existence of student
-    let availLec = await lecReg.exists(GradingTx.lecMemberID);
+    let availLec = await lecReg.exists(GradingTx.lecID);
 
     //Get Factory to create new resource
     let factory = getFactory();
@@ -53,7 +53,7 @@ async function Grading(GradingTx) {
             var transcript = await transcriptReg.get(transcriptID);
 
             //Create new Grade
-            let gradeID = transcriptID + "grade_" + (transcript.gradesList.length + 1);
+            let gradeID = transcriptID + "grade_" + GradingTx.courseID;
             let newGrade = factory.newResource('org.dvn.com', 'Grade', gradeID.toString());
             newGrade.issueDate = GradingTx.timestamp;
             newGrade.courseID = GradingTx.courseID;
@@ -63,8 +63,9 @@ async function Grading(GradingTx) {
             newGrade.semester = GradingTx.semester;
 
             //Create relationship
-            newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecMemberID);
-            //newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdMemberID);
+            newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
+            newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
+
 
             //Update grade to grade registry
             await gradeReg.add(newGrade);
@@ -79,11 +80,12 @@ async function Grading(GradingTx) {
             //Create new Transcript
             let newTranscript = factory.newResource('org.dvn.com', 'Transcript', transcriptID);
             //Tao relationship cho doi tuong reference
-            newTranscript.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdMemberID);
+            newTranscript.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
+            newTranscript.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
             newTranscript.gradesList = [];
 
             //Create new Grade
-            let gradeID = transcriptID + "grade_" + (newTranscript.gradesList.length + 1);
+            let gradeID = transcriptID + "grade_" + GradingTx.courseID;
             let newGrade = factory.newResource('org.dvn.com', 'Grade', gradeID.toString());
             newGrade.issueDate = GradingTx.timestamp;
             newGrade.courseID = GradingTx.courseID;
@@ -93,29 +95,29 @@ async function Grading(GradingTx) {
             newGrade.semester = GradingTx.semester;
 
             //Create relationship
-            newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecMemberID);
-            //newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdMemberID);
+            newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
+            newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
 
             //Update grade to grade registry
             await gradeReg.add(newGrade);
 
             //Save new grade to transcript
             newTranscript.gradesList.push(newGrade);
-
+            console.log(newTranscript);
             //add transcript to transcript registry
             await transcriptReg.add(newTranscript);
-
+            console.log("here3");
         }
         //Create new event
         let GradingEvent = factory.newEvent('org.dvn.com', 'GradingEvent');
         GradingEvent.gradingTransaction = GradingTx;
         GradingEvent.action = action;
-        
+
         //Emit event
         emit(GradingEvent);
     } else {
-       throw new ReferenceError (
-           "Student or Lecture not found"
-       )
+        throw new ReferenceError(
+            "Student or Lecture not found"
+        )
     }
 }

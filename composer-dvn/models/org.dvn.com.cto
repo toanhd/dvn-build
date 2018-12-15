@@ -43,7 +43,7 @@ asset Grade identified by transcriptID {
   o Integer credit
   o Integer semester
   o Double gradeVal
-  //--> Student student  //tham chieu den doi tuong Student
+  --> Student student  //tham chieu den doi tuong Student
   --> Lecturer lecturer //tham chieu den doi tuong Lecture
 }
 
@@ -64,8 +64,8 @@ transaction Grading {
   o Integer semester
   //o Student student
   //o Lecturer lecturer
-  o String stdMemberID
-  o String lecMemberID
+  o String stdID
+  o String lecID
 }
 event GradingEvent {
   o Grading gradingTransaction

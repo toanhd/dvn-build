@@ -1,0 +1,148 @@
+{
+    "name": "vnclinet",
+    "x-type": "hlfv1",
+    "version": "1.0.0",
+    "client": {
+    "organization": "ORG_NAME",
+    "connection": {
+        "timeout": {
+            "peer": {
+                "endorser": "120",
+                "eventHub": "120",
+                "eventReg": "120"
+            },
+            "orderer": "120"
+          }
+      }
+    },
+    "channels": {
+        "vietnamclinet": {
+            "orderers": [
+                "orderer0.vnclinet.com",
+                "orderer1.vnclinet.com"
+            ],
+            "peers": {
+                "peer0.moh.vnclinet.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "peer1.moh.vnclinet.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },                
+                "peer0.hos.vnclinet.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "peer1.hos.vnclinet.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "organizations": {
+        "MOHMSP": {
+            "mspid": "MOHMSP",
+            "peers": [
+                "peer0.moh.vnclinet.com",
+                "peer1.moh.vnclinet.com"
+            ],
+            "certificateAuthorities": [
+                "ca.moh.vnclinet.com"
+            ]
+        },
+        "HOSMSP": {
+            "mspid": "HOSMSP",
+            "peers": [
+                "peer0.hos.vnclinet.com",
+                "peer1.hos.vnclinet.com"
+            ],
+            "certificateAuthorities": [
+                "ca.hos.vnclinet.com"
+            ]
+        }
+    },
+    "orderers": {
+        "orderer0.vnclinet.com": {
+            "url": "grpcs://ubuntupc:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer0.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "ORDERER_CERT_PEM"
+            }
+        },
+        "orderer1.vnclinet.com": {
+            "url": "grpcs://ubuntupc:8050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer1.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "ORDERER_CERT_PEM"
+            }
+        }
+    },
+    "peers": {
+        "peer0.moh.vnclinet.com": {
+            "url": "grpcs://ubuntupc:7051",
+            "eventUrl": "grpcs://ubuntupc:7053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.moh.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "MOH_CERT_PEM"
+            }
+        },
+        "peer1.moh.vnclinet.com": {
+            "url": "grpcs://ubuntupc:8051",
+            "eventUrl": "grpcs://ubuntupc:8053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.moh.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "MOH_CERT_PEM"
+            }
+        },
+        "peer0.hos.vnclinet.com": {
+            "url": "grpcs://ubuntupc:9051",
+            "eventUrl": "grpcs://ubuntupc:9053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.hos.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "HOS_CERT_PEM"
+            }
+        },
+        "peer1.hos.vnclinet.com": {
+            "url": "grpcs://ubuntupc:10051",
+            "eventUrl": "grpcs://ubuntupc:10053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.hos.vnclinet.com"
+            },
+            "tlsCACerts": {
+                "pem": "HOS_CERT_PEM"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.moh.vnclinet.com": {
+            "url": "https://ubuntupc:7054",
+            "caName": "ca-moh",
+            "httpOptions": {
+                "verify": false
+            }
+        },
+        "ca.hos.vnclinet.com": {
+            "url": "https://ubuntupc:8054",
+            "caName": "ca-hos",
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

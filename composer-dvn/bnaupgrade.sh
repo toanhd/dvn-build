@@ -1,41 +1,27 @@
-APPVERSION=0.0.154
+APPVERSION=0.0.2
 
-composer archive create -t dir -n ../composer/vnclinet
+composer archive create -t dir -n . #create bna file
 
 set -x
-composer network install -c PeerAdmin@moh.vnclinet.com --archiveFile vnclinet@$APPVERSION.bna
+composer network install --card PeerAdmin@dvn-hust --archiveFile composer-dvn@$APPVERSION.bna
 set +x
 sleep 5
 
 set -x
-composer network install -c PeerAdmin@hos.vnclinet.com --archiveFile vnclinet@$APPVERSION.bna
+composer network install --card PeerAdmin@dvn-moe --archiveFile composer-dvn@$APPVERSION.bna
 set +x
 sleep 5
 
 set -x
-composer network install -c PeerAdmin@clinic.vnclinet.com --archiveFile vnclinet@$APPVERSION.bna
-set +x
-sleep 5
-
-set -x
-composer network install -c PeerAdmin@vtt.vnclinet.com --archiveFile vnclinet@$APPVERSION.bna
-set +x
-sleep 5
-
-set -x
-composer network install -c PeerAdmin@vsp.vnclinet.com --archiveFile vnclinet@$APPVERSION.bna
-set +x
-sleep 5
-
-set -x
-composer network upgrade  -c PeerAdmin@moh.vnclinet.com \
-                        -n vnclinet \
+composer network upgrade  -c PeerAdmin@dvn-hust \
+                        -n composer-dvn \
                         -V $APPVERSION \
                         -o endorsementPolicyFile=endorspol.json
 
 set +x
 
-
 set -x
-composer network ping -c admin-moh@vnclinet
+composer network ping -c admin-hust@composer-dvn
 set +x
+echo "timeout for 5 sec"
+sleep 5
