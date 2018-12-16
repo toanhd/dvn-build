@@ -71,7 +71,12 @@ event GradingEvent {
   o String action
 }
 
+transaction queryGrade {
+  o String transcriptID
+}
+
 event gradesByID {
   o String transcriptID
   o Grade[] grades
+  o String action optional
 }
