@@ -18,3 +18,10 @@ query queryGrade {
     SELECT org.dvn.com.Grade
     WHERE (transcriptID == _$transcriptID)
 }
+
+query selectCommoditiesByOwner {
+  description: "Select all commodities based on their owner"
+  statement:
+      SELECT org.dvn.com.Grade
+          WHERE (transcriptID == _$transcriptID)
+}

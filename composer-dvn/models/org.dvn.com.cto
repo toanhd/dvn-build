@@ -64,9 +64,14 @@ transaction Grading {
   o Integer semester
   o String stdID
   o String lecID
-
 }
+
 event GradingEvent {
   o Grading gradingTransaction
   o String action
+}
+
+event gradesByID {
+  o String transcriptID
+  o Grade[] grades
 }

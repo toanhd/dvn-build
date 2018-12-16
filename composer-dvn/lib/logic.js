@@ -48,6 +48,7 @@ async function Grading(GradingTx) {
     //Asset Registry for object type Grade
     let gradeReg = await getAssetRegistry('org.dvn.com.Grade');
 
+
     if (availStd && availLec) {
         if (availTranscript) {
 
@@ -81,7 +82,7 @@ async function Grading(GradingTx) {
         } else { //this student transcript is not exist
             //Create new Transcript
             let newTranscript = factory.newResource('org.dvn.com', 'Transcript', transcriptID);
-          
+
             //Tao relationship cho doi tuong reference
             newTranscript.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
             newTranscript.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
@@ -128,4 +129,33 @@ async function Grading(GradingTx) {
             avalStatus
         )
     }
+}
+
+/**
+ * Make an Offer for a VehicleListing
+ * @param {org.dvn.com.queryGrade} offer - the offer
+ * @transaction
+ */
+
+async function queryGrade(queryGradeTx) {
+    //Get Factory to create new resource
+    let factory = getFactory();
+    let gradesByID = factory.newEvent('org.dvn.com', 'gradesByID');
+    gradesByID.transcriptID = queryGradeTx.transcriptID;
+
+    var q = buildQuery('SELECT org.dvn.com.Grade WHERE (transcriptID == _$transcriptID)');
+
+    let res = [];
+
+    query(q, { transcriptID: queryGradeTx.transcriptID })
+        .then(function (grades) {
+            res = grades;
+        })
+        .catch(function (error) {
+        });
+
+    gradesByID.grades = res;
+    
+    //Emit event
+    emit(gradesByID);
 }
