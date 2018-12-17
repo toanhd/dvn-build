@@ -158,6 +158,4 @@ async function queryGrade(queryGradeTx) {
 
     //Emit event
     emit(gradesByID);
-
-    return gradesByID;
 }
