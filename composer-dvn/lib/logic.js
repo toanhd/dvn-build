@@ -132,8 +132,8 @@ async function Grading(GradingTx) {
 }
 
 /**
- * Make an Offer for a VehicleListing
- * @param {org.dvn.com.queryGrade} offer - the offer
+ * Search for Grades by  transcript ID
+ * @param {org.dvn.com.queryGrade} queryGrade
  * @transaction
  */
 
@@ -155,7 +155,9 @@ async function queryGrade(queryGradeTx) {
         });
 
     gradesByID.grades = res;
-    
+
     //Emit event
     emit(gradesByID);
+
+    return gradesByID;
 }
