@@ -35,7 +35,7 @@ participant Lecturer identified by lecID {
   o Boolean isMoE
 }
 
-asset Grade identified by gradeID {
+concept Grade {
   o String transcriptID
   o String gradeID
   o DateTime issueDate
@@ -50,7 +50,7 @@ asset Grade identified by gradeID {
 
   asset Transcript identified by transcriptID {
   o String transcriptID
-  o String[] gradeIDsList optional// array of gradeID
+  o Grade[] gradesList optional// array of gradeID
   --> Student student  //tham chieu den doi tuong Student
   --> Lecturer lecturer //tham chieu den doi tuong Lecturer
 }
@@ -69,14 +69,4 @@ transaction Grading {
 event GradingEvent {
   o Grading gradingTransaction
   o String action
-}
-
-transaction queryGrade {
-  o String transcriptID
-}
-
-event gradesByID {
-  o String transcriptID
-  o Grade[] grades
-  o String action optional
 }

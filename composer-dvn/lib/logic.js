@@ -42,42 +42,56 @@ async function Grading(GradingTx) {
     //check existence of student
     let availLec = await lecReg.exists(GradingTx.lecID);
 
+    let availGrade = false;
+
     //Get Factory to create new resource
     let factory = getFactory();
-
-    //Asset Registry for object type Grade
-    let gradeReg = await getAssetRegistry('org.dvn.com.Grade');
-
 
     if (availStd && availLec) {
         if (availTranscript) {
 
             var transcript = await transcriptReg.get(transcriptID);
+            let inputGradeid = gradeID = transcriptID + "_grade" + GradingTx.courseID;
 
-            //Create new Grade
-            let gradeID = transcriptID + "_grade" + GradingTx.courseID;
-            let newGrade = factory.newResource('org.dvn.com', 'Grade', gradeID.toString());
+            function containsObject(id, list) {
+                var i;
+                for (i = 0; i < list.length; i++) {
+                    if (list[i].gradeID === id) {
+                        return true;
+                    }
+                }
+                return false;
+            }
 
-            newGrade.transcriptID = transcriptID;
-            newGrade.issueDate = GradingTx.timestamp;
-            newGrade.courseID = GradingTx.courseID;
-            newGrade.courseName = GradingTx.courseName;
-            newGrade.credit = GradingTx.credit;
-            newGrade.gradeVal = GradingTx.gradeVal;
-            newGrade.semester = GradingTx.semester;
+            if (containsObject(inputGradeid, transcript.gradesList)) {
+                const avalStatus = "thisGradeIDIsAvail";
+                throw new ReferenceError(
+                    avalStatus
+                )
+            } else {
+                //Create new Grade
+                let newGrade = factory.newConcept('org.dvn.com', 'Grade');
 
-            //Create relationship
-            newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
-            newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
+                newGrade.transcriptID = transcriptID;
+                newGrade.gradeID = inputGradeid;
+                newGrade.issueDate = GradingTx.timestamp;
+                newGrade.courseID = GradingTx.courseID;
+                newGrade.courseName = GradingTx.courseName;
+                newGrade.credit = GradingTx.credit;
+                newGrade.gradeVal = GradingTx.gradeVal;
+                newGrade.semester = GradingTx.semester;
 
-            //Update grade to grade registry
-            await gradeReg.add(newGrade);
+                //Create relationship
+                newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
+                newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
 
-            //Save new grade to transcript
-            transcript.gradeIDsList.push(gradeID);
+                //Save new grade to transcript
+                transcript.gradesList.push(newGrade);
 
-            //Update transcript to transcript registry
-            await transcriptReg.update(transcript);
+                //Update transcript to transcript registry
+                await transcriptReg.update(transcript);
+            }
+
 
         } else { //this student transcript is not exist
             //Create new Transcript
@@ -86,12 +100,12 @@ async function Grading(GradingTx) {
             //Tao relationship cho doi tuong reference
             newTranscript.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
             newTranscript.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
-            newTranscript.gradeIDsList = [];
+            newTranscript.gradesList = [];
 
-            //Create new Grade
-            let gradeID = transcriptID + "_grade" + GradingTx.courseID;
-            let newGrade = factory.newResource('org.dvn.com', 'Grade', gradeID.toString());
+            let newGrade = factory.newConcept('org.dvn.com', 'Grade');
+
             newGrade.transcriptID = transcriptID;
+            newGrade.gradeID = transcriptID + "_grade" + GradingTx.courseID;
             newGrade.issueDate = GradingTx.timestamp;
             newGrade.courseID = GradingTx.courseID;
             newGrade.courseName = GradingTx.courseName;
@@ -103,59 +117,25 @@ async function Grading(GradingTx) {
             newGrade.lecturer = factory.newRelationship('org.dvn.com', 'Lecturer', GradingTx.lecID);
             newGrade.student = factory.newRelationship('org.dvn.com', 'Student', GradingTx.stdID);
 
-            //Update grade to grade registry
-            await gradeReg.add(newGrade);
-
             //Save new grade to transcript
-            newTranscript.gradeIDsList.push(gradeID);
+            newTranscript.gradesList.push(newGrade);
 
             //add transcript to transcript registry
             await transcriptReg.add(newTranscript);
         }
+        console.log("go here");
+
         //Create new event
         let GradingEvent = factory.newEvent('org.dvn.com', 'GradingEvent');
         GradingEvent.gradingTransaction = GradingTx;
         GradingEvent.action = action;
-
         //Emit event
         emit(GradingEvent);
     } else {
-        const avalStatus = {
-            student: availStd,
-            lecturer: availLec,
-            transcript: availTranscript
-        };
+        const avalStatus = "availStd: " + availStd + ", availecturer:" + availLec + ", avaitranscript:" + availTranscript;
         throw new ReferenceError(
             avalStatus
         )
     }
 }
 
-/**
- * Search for Grades by  transcript ID
- * @param {org.dvn.com.queryGrade} queryGrade
- * @transaction
- */
-
-async function queryGrade(queryGradeTx) {
-    //Get Factory to create new resource
-    let factory = getFactory();
-    let gradesByID = factory.newEvent('org.dvn.com', 'gradesByID');
-    gradesByID.transcriptID = queryGradeTx.transcriptID;
-
-    var q = buildQuery('SELECT org.dvn.com.Grade WHERE (transcriptID == _$transcriptID)');
-
-    let res = [];
-
-    query(q, { transcriptID: queryGradeTx.transcriptID })
-        .then(function (grades) {
-            res = grades;
-        })
-        .catch(function (error) {
-        });
-
-    gradesByID.grades = res;
-
-    //Emit event
-    emit(gradesByID);
-}
