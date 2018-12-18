@@ -123,8 +123,6 @@ async function Grading(GradingTx) {
             //add transcript to transcript registry
             await transcriptReg.add(newTranscript);
         }
-        console.log("go here");
-
         //Create new event
         let GradingEvent = factory.newEvent('org.dvn.com', 'GradingEvent');
         GradingEvent.gradingTransaction = GradingTx;
