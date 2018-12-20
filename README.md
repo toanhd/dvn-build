@@ -1,5 +1,4 @@
-## Hyperledger Network
-Document Verification
+# Hyperledger Network - Document Verification
 
 ## Install Prerequires
 curl -O https://hyperledger.github.io/composer/v0.19/prereqs-ubuntu.sh
