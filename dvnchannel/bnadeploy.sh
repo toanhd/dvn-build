@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 function createBNCard() {
         echo
         echo
@@ -8,13 +9,13 @@ function createBNCard() {
 
         # Add participant
         set -x
-        composer participant add -c admin-hust@composer-dvn \
+        composer participant add -c admin-hust@dvnchannel \
                 -d '{"$class":"org.hyperledger.composer.system.NetworkAdmin","participantId":"admin'$1'"}'
         set +x
 
         # Bind identity
         set -x
-        composer identity bind -c admin-hust@composer-dvn \
+        composer identity bind -c admin-hust@dvnchannel \
                         -a org.hyperledger.composer.system.NetworkAdmin#admin$1 \
                         -e admin-$1/admin$1-pub.pem
         set +x
@@ -23,20 +24,20 @@ function createBNCard() {
         set -x
         composer card create -p network-profile/$1-profile.json  \
                         -u admin-$1 \
-                        -n composer-dvn \
+                        -n dvnchannel \
                         -c admin-$1/admin$1-pub.pem \
                         -k admin-$1/admin$1-priv.pem
         set +x
 
         # Import cardstarting time for cert might have been met until few minutes on client elapsed)
         set -x
-        composer card import -f admin-$1@composer-dvn.card
+        composer card import -f admin-$1@dvnchannel.card
 
         set +x
 
         # Test ping
         set -x
-        composer network ping -c admin-$1@composer-dvn
+        composer network ping -c admin-$1@dvnchannel
         set +x
 }
 
@@ -45,12 +46,12 @@ APPVERSION=0.0.1
 composer archive create -t dir -n . #create bna file
 
 set -x
-composer network install --card PeerAdmin@dvn-hust --archiveFile composer-dvn@$APPVERSION.bna
+composer network install --card PeerAdmin@dvn-hust --archiveFile dvnchannel@$APPVERSION.bna
 set +x
 sleep 5
 
 set -x
-composer network install --card PeerAdmin@dvn-moe --archiveFile composer-dvn@$APPVERSION.bna
+composer network install --card PeerAdmin@dvn-moe --archiveFile dvnchannel@$APPVERSION.bna
 set +x
 sleep 5
 
@@ -67,7 +68,7 @@ sleep 10
 
 set -x
 composer network start  -c PeerAdmin@dvn-hust \
-                        -n composer-dvn \
+                        -n dvnchannel \
                         -V $APPVERSION \
                         -o endorsementPolicyFile=endorspol.json \
                         -A admin-hust \
@@ -82,13 +83,13 @@ echo
 sleep 10
 
 set -x
-composer card import -f admin-hust@composer-dvn.card
+composer card import -f admin-hust@dvnchannel.card
 set +x
 echo "timeout for 5 sec"
 sleep 5
 
 set -x
-composer network ping -c admin-hust@composer-dvn
+composer network ping -c admin-hust@dvnchannel
 set +x
 echo "timeout for 5 sec"
 sleep 5
