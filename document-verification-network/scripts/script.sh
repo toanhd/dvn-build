@@ -92,22 +92,6 @@ installChaincode 0 2
 echo "Instantiating chaincode on peer0.moe..."
 instantiateChaincode 0 2
 
-# Query chaincode on peer0.hust
-#echo "Querying chaincode on peer0.hust..."
-#chaincodeQuery 0 1 100
-
-# Invoke chaincode on peer0.hust and peer0.moe
-#echo "Sending invoke transaction on peer0.hust peer0.moe..."
-#chaincodeInvoke 0 1 0 2
-
-## Install chaincode on peer1.moe
-#echo "Installing chaincode on peer1.moe..."
-#installChaincode 1 2
-
-# Query on chaincode on peer1.moe, check if the result is 90
-#echo "Querying chaincode on peer1.moe..."
-#chaincodeQuery 1 2 90
-
 echo
 echo "========= All GOOD, DVN execution completed =========== "
 echo
