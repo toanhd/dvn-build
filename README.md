@@ -23,7 +23,7 @@ npm install -g yo
 ## Clone git dir
 git clone https://github.com/toanhd/dvn-build.git
 
-sudo chmod 755 -R /home/toanhd/dvn-build
+sudo chmod 755 -R /home/toanhd/dvn-network-build
 
 ## For network build by Fabric
 ./dvn.sh 
