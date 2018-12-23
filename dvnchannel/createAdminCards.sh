@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 function replacePemCert() {
 	cp network-profile-template.json network-profile/org-profile.json
 
@@ -36,11 +37,11 @@ composer card delete -c PeerAdmin@dvn-moe
 set +x
 
 set -x
-composer card delete -c admin-hust@composer-dvn
+composer card delete -c admin-hust@dvnchannel
 set +x
 
 set -x
-composer card delete -c admin-moe@composer-dvn
+composer card delete -c admin-moe@dvnchannel
 set +x
 
 HUSTMSPDIR=../document-verification-network/crypto-config/peerOrganizations/hust.dvn.com/users/Admin@hust.dvn.com/msp

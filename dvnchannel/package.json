@@ -2,7 +2,7 @@
   "engines": {
     "composer": "^0.20.4"
   },
-  "name": "composer-dvn",
+  "name": "dvnchannel",
   "version": "0.0.1",
   "description": "document verification network",
   "scripts": {
